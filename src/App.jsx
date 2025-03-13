@@ -22,7 +22,7 @@ export default function App() {
   return (
     <div className="flex flex-col items-center justify-center min-h-screen bg-gradient-to-br from-purple-600 to-blue-400 text-white p-4">
       <h1 className="text-4xl font-bold mb-4 drop-shadow-lg">
-        Calculadora Creativa
+        Calculadora Sencilla
       </h1>
       <div className="bg-gray-900 p-6 rounded-xl shadow-2xl w-80">
         <div className="text-right text-3xl bg-gray-800 p-4 rounded-md mb-4 font-mono tracking-wider overflow-hidden">
