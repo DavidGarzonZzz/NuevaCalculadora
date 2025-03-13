@@ -1,71 +1,62 @@
-import React, { useState } from "react";
+import { useState } from "react";
 
 export default function App() {
-  const [input, setInput] = useState("");
+  const [input, setInput] = useState("0");
 
   const handleClick = (value) => {
-    setInput(input + value);
-  };
-
-  const clearInput = () => {
-    setInput("");
-  };
-
-  const calculateResult = () => {
-    try {
-      setInput(eval(input).toString());
-    } catch {
-      setInput("Error");
+    if (value === "C") {
+      setInput("0");
+    } else if (value === "=") {
+      try {
+        setInput(eval(input).toString());
+      } catch {
+        setInput("Error");
+      }
+    } else {
+      setInput((prev) =>
+        prev === "0" || prev === "Error" ? value : prev + value
+      );
     }
   };
 
   return (
-    <div style={styles.container}>
-      <div style={styles.display}>{input || "0"}</div>
-      <div style={styles.buttons}>
-        {["7", "8", "9", "/"].map((btn) => (
-          <button key={btn} onClick={() => handleClick(btn)}>
-            {btn}
-          </button>
-        ))}
-        {["4", "5", "6", "*"].map((btn) => (
-          <button key={btn} onClick={() => handleClick(btn)}>
-            {btn}
-          </button>
-        ))}
-        {["1", "2", "3", "-"].map((btn) => (
-          <button key={btn} onClick={() => handleClick(btn)}>
-            {btn}
-          </button>
-        ))}
-        {["0", ".", "=", "+"].map((btn) => (
-          <button
-            key={btn}
-            onClick={() => (btn === "=" ? calculateResult() : handleClick(btn))}
-          >
-            {btn}
-          </button>
-        ))}
-        <button style={styles.clear} onClick={clearInput}>
-          C
-        </button>
+    <div className="flex flex-col items-center justify-center min-h-screen bg-gradient-to-br from-purple-600 to-blue-400 text-white p-4">
+      <h1 className="text-4xl font-bold mb-4 drop-shadow-lg">
+        Calculadora Creativa
+      </h1>
+      <div className="bg-gray-900 p-6 rounded-xl shadow-2xl w-80">
+        <div className="text-right text-3xl bg-gray-800 p-4 rounded-md mb-4 font-mono tracking-wider overflow-hidden">
+          {input}
+        </div>
+        <div className="grid grid-cols-4 gap-2">
+          {[
+            "7",
+            "8",
+            "9",
+            "/",
+            "4",
+            "5",
+            "6",
+            "*",
+            "1",
+            "2",
+            "3",
+            "-",
+            "0",
+            "C",
+            "=",
+            "+",
+          ].map((btn) => (
+            <button
+              key={btn}
+              className="bg-gray-700 hover:bg-gray-500 active:bg-gray-400 text-white p-4 rounded-md text-2xl font-semibold transition-all duration-150 ease-in-out shadow-md hover:shadow-lg"
+              onClick={() => handleClick(btn)}
+            >
+              {btn}
+            </button>
+          ))}
+        </div>
       </div>
     </div>
   );
 }
-
-const styles = {
-  container: { textAlign: "center", marginTop: "50px" },
-  display: {
-    fontSize: "2em",
-    padding: "10px",
-    border: "1px solid #ccc",
-    marginBottom: "10px",
-  },
-  buttons: {
-    display: "grid",
-    gridTemplateColumns: "repeat(4, 60px)",
-    gap: "5px",
-  },
-  clear: { gridColumn: "span 4", backgroundColor: "red", color: "white" },
-};
